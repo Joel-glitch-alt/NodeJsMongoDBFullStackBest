@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headers</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation Styling */
+        nav {
+            background-color: #1e62b0;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav h1 a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav h1 a:hover {
+            color: #f1c40f;
+        }
+
+        ul {
+            list-style-type: none;
+            text-align: center;
+        }
+
+        ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        ul li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Hover Effect on Links */
+        ul li a:hover {
+            color: #f1c40f;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1><a href='/header'>Addition Page</a></h1>
+        <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+            
+        </ul>
+    </nav>
+</body>
+</html>

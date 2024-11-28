@@ -1,0 +1,207 @@
+<!-- views/signUp.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        /* Modernized Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #eef1f7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            color: #083568;
+            font-weight: 700;
+        }
+
+        .login-form h2 {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .login-form label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #1e62b0;
+            box-shadow: 0px 0px 6px rgba(30, 98, 176, 0.2);
+        }
+
+        .error {
+            color: #d9534f;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            height: 1.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: #1e62b0;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0c457d;
+        }
+
+        /* Placeholder Style */
+        ::placeholder {
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Log In</h1>
+
+        <form action="/login" method="POST" class="login-form">
+            <!-- Username Input -->
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Enter your username" required />
+            <div class="error username-error"></div>
+
+            <!-- Email Input -->
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email" required />
+            <div class="error email-error"></div>
+
+            <!-- Password Input -->
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter your password" required minlength="8" />
+            <div class="error password-error"></div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Log in</button>
+        </form>
+
+        <script>
+            const form = document.querySelector('form');
+            const emailError = document.querySelector('.email-error');
+            const passwordError = document.querySelector('.password-error');
+            const usernameError = document.querySelector('.username-error');
+
+            // form.addEventListener('submit', async (e) => {
+            //     e.preventDefault();
+        
+            //     // Clear previous errors
+            //     usernameError.textContent = '';
+            //     emailError.textContent = '';
+            //     passwordError.textContent = '';
+        
+            //     // Get form values
+            //     const username = form.username.value;
+            //     const email = form.email.value;
+            //     const password = form.password.value;
+        
+            //     try {
+            //         const res = await fetch('/login', { // Ensure URL matches form action
+            //             method: 'POST',
+            //             body: JSON.stringify({ username, email, password }),
+            //             headers: { 'Content-Type': 'application/json' }
+            //         });
+                    
+            //         const data = await res.json();
+            //         if (data.errors) {
+            //             // Display specific error messages
+            //             if (data.errors.username) usernameError.textContent = data.errors.username;
+            //             if (data.errors.email) emailError.textContent = data.errors.email;
+            //             if (data.errors.password) passwordError.textContent = data.errors.password;
+            //         } else {
+            //             // Redirect on successful registration
+            //             location.assign('/smoothes');
+            //         }
+            //     } catch (error) {
+            //         console.log(error);
+            //     }
+            // });
+        
+            form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    usernameError.textContent = '';
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+ 
+
+    // Get form values
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+        const res = await fetch('/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password, username }),
+    headers: { 'Content-Type': 'application/json' }
+});
+
+        const data = await res.json();
+        if (data.errors) {
+            // Display specific error messages
+            if (data.errors.username) usernameError.textContent = data.errors.username;
+            if (data.errors.email) emailError.textContent = data.errors.email;
+            if (data.errors.password) passwordError.textContent = data.errors.password;
+        } else {
+            // Redirect on successful registration
+            location.assign('/smoothes');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+        
+        </script>
+    </div>
+</body>
+</html>

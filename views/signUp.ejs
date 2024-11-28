@@ -1,0 +1,164 @@
+<!-- views/signUp.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* Embedded CSS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f6f8;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .signup-form h2 {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .signup-form label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        .signup-form input[type="text"],
+        .signup-form input[type="email"],
+        .signup-form input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .signup-form input:focus {
+            outline: none;
+            border-color: #083568;
+            box-shadow: 0px 0px 4px rgba(74, 144, 226, 0.3);
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            height: 1.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1e62b0;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #357ABD;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up Page</h1>
+
+        <form action="/signup" method="POST" class="signup-form">
+            <h2>Create an Account</h2>
+
+            <!-- Username Input -->
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required />
+            <div class="error username-error"></div>
+
+            <!-- Email Input -->
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+            <div class="error email-error"></div>
+
+            <!-- Password Input -->
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required minlength="8" />
+            <div class="error password-error"></div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+
+        <script>
+            const form = document.querySelector('form');
+            const emailError = document.querySelector('.email-error');
+            const passwordError = document.querySelector('.password-error');
+            const usernameError = document.querySelector('.username-error');
+        
+            form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    usernameError.textContent = '';
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    // Get form values
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+        const res = await fetch('/signup', { 
+            method: 'POST',
+            body: JSON.stringify({ username, email, password }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await res.json();
+        if (data.errors) {
+            // Display specific error messages
+            if (data.errors.username) usernameError.textContent = data.errors.username;
+            if (data.errors.email) emailError.textContent = data.errors.email;
+            if (data.errors.password) passwordError.textContent = data.errors.password;
+        } else {
+            // Redirect on successful registration
+            location.assign(data.redirect); 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+        </script>
+        
+    </div>
+</body>
+</html>
